@@ -14,7 +14,7 @@ type AppRoutes = {
 
 export type AuthNavigatorRoutesProps = NativeStackNavigationProp<AppRoutes>;
 
-const {Navigator, Screen} = createNativeStackNavigator<AppRoutes>   ();
+const {Navigator, Screen} = createNativeStackNavigator<AppRoutes>();
 export function AppRoutes() {
 return (
     <Navigator screenOptions={{headerShown: false}}>
