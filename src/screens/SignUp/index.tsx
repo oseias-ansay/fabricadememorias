@@ -7,17 +7,15 @@ import { useNavigation } from "@react-navigation/native";
 
 const bgImage = require("../../assets/background.jpg");      
 
-export function SignIn() {
+export function SignUp() {
   const navigator = useNavigation<AuthNavigatorRoutesProps>();
-
-  function handleNewAccount() {
-    navigator.navigate("signUp");
+  function handleGoBack() {
+    navigator.navigate("signIn");
   }
   return (
     <Background source={bgImage} resizeMode="cover"> 
     <Overlay>
     <Container>   
-    
         <Logo>Fábrica de Memórias</Logo>
         <Title>Familia Solyom Ansay</Title>
         <Espaco />
@@ -25,8 +23,8 @@ export function SignIn() {
        <Input placeholder="Email" />
        <Input placeholder="Senha" secureTextEntry />  
        <Espaco />
-       <Button title="Entrar" onPress={() => navigator.navigate("signIn")} />
-       <Button title="Cadastrar conta" onPress={handleNewAccount}   />
+       <Button title="Cadastrar Conta" />
+       <Button title="Voltar a tela inicial" onPress={handleGoBack}  /> 
     
     </Container>
     </Overlay>
@@ -35,4 +33,3 @@ export function SignIn() {
 }
 
         
-
