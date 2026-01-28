@@ -32,7 +32,7 @@ export const Logo = styled.Text`
   color: ${({ theme }) => theme.COLORS.PRINCIPAL};
   font-size: ${({  theme }) => theme.FONT_SIZE.XL}px;
   font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  margin-top: -120px;
+  margin-top: 10px;
 `;
 
 export const Title = styled.Text`
@@ -44,7 +44,8 @@ export const Title = styled.Text`
 `;
 
 export const Subtitle = styled.Text`
+  margin-top: 100px;
   color: ${({ theme }) => theme.COLORS.BRANCO};
-  font-size: ${({  theme }) => theme.FONT_SIZE.SM}px;
+  font-size: ${({  theme }) => theme.FONT_SIZE.XL}px;
   font-family: ${({ theme }) => theme.FONT_FAMILY.REGULAR};
 `;

@@ -9,7 +9,7 @@ export const Container = styled(TextInput)`
   padding: 10px;
   font-size: ${({ theme }) => theme.FONT_SIZE.LG}px;
   font-family: ${({ theme }) => theme.FONT_FAMILY.REGULAR };
-  color: ${({ theme }) => theme.COLORS.BRANCO};
+  color: ${({ theme }) => theme.COLORS.BACKGROUND};
   flex-direction: row;  
   align-items: center;
   margin-top: 10px;
