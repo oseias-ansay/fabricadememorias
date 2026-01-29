@@ -1,7 +1,7 @@
 import { Button } from "../../components/Button/Index";
 import { Input } from "../../components/Input";
 import { Background, Container, Espaco, Logo, Overlay,Subtitle,Title } from "./styles";  
-
+import { useAuth } from "../../hooks/useAuth";
 import { AuthNavigatorRoutesProps } from "../../routes/auth.routes";  
 import { useNavigation } from "@react-navigation/native";
 
@@ -16,8 +16,8 @@ type FormDataProps = {
 
 }
 
-export function SignIn() {
-
+export function SignIn() {  
+  const { signIn } = useAuth();
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>();
   
   const navigator = useNavigation<AuthNavigatorRoutesProps>();
@@ -26,7 +26,7 @@ export function SignIn() {
   }
 
   function handleSignIn({username, email, password}: FormDataProps) {
-    console.log({username, email, password});
+    signIn(email, password);
   }
   return (
     <Background source={bgImage} resizeMode="cover"> 

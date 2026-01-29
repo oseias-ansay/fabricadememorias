@@ -1,11 +1,10 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { UserDTO } from "../dtos/UserDtos";
-import { ThemeProvider } from "@react-navigation/native";
-import theme from "../theme";
-import { Loading } from "../components/Loading";
+import { set } from "react-hook-form";
 
 export type AuthContextDataProps   = {
   user: UserDTO;
+  signIn : (email: string, password: string) => void;
 };
 
 type AuthContextProviderProps = {
@@ -15,18 +14,27 @@ type AuthContextProviderProps = {
 export const AuthContext = createContext<AuthContextDataProps>({} as AuthContextDataProps);
 
 export function AuthContextProvider({children}: AuthContextProviderProps  ) {
-  return (
-     <AuthContext.Provider value={{
-         user: {
-          id: "1",
-          name: "Oseias",
-          email: "oseias@gmail.com",
-          token: "token-de-teste",
-         }                
-        }}>
-          {children}
+  const [user, setUser] = useState({
+    id: "1",
+    name: "Oseias",
+    email: "oseias@gmail.com",
+    token: "token12345",
+  });
 
-        </AuthContext.Provider>
+  function signIn(email: string, password: string) {
+    // lógica de autenticação 
+    setUser({
+      id: "1",
+      name: "Oseias",
+      email: "oseias@gmail.com",
+      token: "token12345",
+    });
+  }    
+
+  return (    
+      <AuthContext.Provider value={{user, signIn}}>
+          {children}
+      </AuthContext.Provider>
   );
-}
+}   
 
