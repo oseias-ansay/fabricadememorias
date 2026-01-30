@@ -15,19 +15,16 @@ export const AuthContext = createContext<AuthContextDataProps>({} as AuthContext
 
 export function AuthContextProvider({children}: AuthContextProviderProps  ) {
   const [user, setUser] = useState({
-    id: "1",
-    name: "Oseias",
-    email: "oseias@gmail.com",
-    token: "token12345",
+    
   });
 
   function signIn(email: string, password: string) {
     // lógica de autenticação 
     setUser({
-      id: "1",
-      name: "Oseias",
-      email: "oseias@gmail.com",
-      token: "token12345",
+      id: '',
+      name: "",
+      email: "",
+      token: "",
     });
   }    
 
