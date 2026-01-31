@@ -4,7 +4,7 @@ import { Background, Container, Espaco, Logo, Overlay,Subtitle,Title } from "./s
 import { useAuth } from "../../hooks/useAuth";
 import { AuthNavigatorRoutesProps } from "../../routes/auth.routes";  
 import { useNavigation } from "@react-navigation/native";
-
+import * as yup from 'yup';
 import {useForm,Controller} from 'react-hook-form'
 
 const bgImage = require("../../assets/background.jpg");  
@@ -15,6 +15,7 @@ type FormDataProps = {
   password: string;
 
 }
+
 
 export function SignIn() {  
   const { signIn } = useAuth();
@@ -86,6 +87,8 @@ export function SignIn() {
        <Espaco />
        <Button title="Entrar" onPress={handleSubmit(handleSignIn )}  />
        <Button title="Criar a sua conta" onPress={handleGoBack}  /> 
+
+       <Subtitle>Esqueceu sua senha?</Subtitle>
     
     </Container>
     </Overlay>
