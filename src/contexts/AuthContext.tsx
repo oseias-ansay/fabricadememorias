@@ -1,11 +1,10 @@
 import { createContext, ReactNode, useState } from "react";
 import { UserDTO } from "../dtos/UserDtos";
-import { set } from "react-hook-form";
-
+import { api } from "../services/api";
 
 export type AuthContextDataProps   = {
   user: UserDTO;
-  signIn : (email: string, password: string) => void;
+  signIn : (email: string, password: string) => Promise<void>;
 };
 
 type AuthContextProviderProps = {
@@ -14,12 +13,21 @@ type AuthContextProviderProps = {
 
 export const AuthContext = createContext<AuthContextDataProps>({} as AuthContextDataProps);
 
-export function AuthContextProvider({children}: AuthContextProviderProps  ) {
+export function AuthContextProvider({children}: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({} as UserDTO);
 
-  function signIn(email: string, password: string) {
-   
+  async function signIn(email: string, password: string) {
+    try {
+    const {data} = await api.post('/sessions', {email, password});
+    
+    if(data.user){
+      setUser(data.user);
+    }
   }    
+  catch (error) {
+    throw error;  
+  }
+  }
 
   return (    
       <AuthContext.Provider value={{user, signIn}}>

@@ -32,7 +32,7 @@ export const Logo = styled.Text`
   color: ${({ theme }) => theme.COLORS.PRINCIPAL};
   font-size: ${({  theme }) => theme.FONT_SIZE.XL}px;
   font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  margin-top: 10px;
+  margin-top: 50px;
 `;
 
 export const Title = styled.Text`

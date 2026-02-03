@@ -10,8 +10,8 @@ import { api } from "../../services/api";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
 import { Alert } from "react-native";
+import { AppError } from "@utils/AppError";
 
 const bgImage = require("../../assets/background.jpg");
 
@@ -39,6 +39,7 @@ const signUpSchema = yup.object({
 });
 
 export function SignUp() {
+  
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     resolver: yupResolver(signUpSchema),
     defaultValues: {
@@ -62,12 +63,9 @@ export function SignUp() {
       const response = await api.post("/users", { username, email, password });
       console.log(response.data);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        Alert.alert(error.response?.data?.message || "Erro ao criar conta. Tente novamente.");
-      } else {
-        console.error(error);
-        Alert.alert("Erro inesperado. Tente novamente mais tarde.");
-      }
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : "Não foi possível criar a conta. Tente novamente mais tarde.";
+      Alert.alert(title);
     }
   }
 

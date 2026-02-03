@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "../../components/Button/Index";
 import { Input } from "../../components/Input";
 import { Background, Container, Espaco, Logo, Overlay,Subtitle,Title } from "./styles";  
@@ -5,30 +6,50 @@ import { useAuth } from "../../hooks/useAuth";
 import { AuthNavigatorRoutesProps } from "../../routes/auth.routes";  
 import { useNavigation } from "@react-navigation/native";
 import * as yup from 'yup';
-import {useForm,Controller} from 'react-hook-form'
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import {useForm,Controller, set} from 'react-hook-form'
+import { Alert } from "react-native";
 const bgImage = require("../../assets/background.jpg");  
 
 type FormDataProps = {
-  username: string;
   email: string;
   password: string;
-
 }
 
-
+const signInSchema = yup.object({
+  email: yup
+    .string().email('E-mail inválido')
+    .required('E-mail obrigatório').email('Insira um e-mail válido'),
+  password: yup
+    .string().min(6,'A senha deve ter pelo menos 6 dígitos')
+    .required('Senha obrigatória'),
+});
 export function SignIn() {  
+  const [isLoading, setIsLoading] = useState(false);
+
   const { signIn } = useAuth();
-  const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>();
+  const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
+  resolver: yupResolver(signInSchema),
+});
+
   
-  const navigator = useNavigation<AuthNavigatorRoutesProps>();
+const navigator = useNavigation<AuthNavigatorRoutesProps>();
   function handleGoBack() {
-    navigator.navigate("signUp");
+  navigator.navigate("signUp");
   }
 
-  function handleSignIn({username, email, password}: FormDataProps) {
-    signIn(email, password);
+async function handleSignIn({email, password}: FormDataProps) {
+  try {
+  setIsLoading(true);
+  } catch (error) {
+  const isAppError = error instanceof Error; 
+  const title = isAppError ? error.message : 'Não foi possível entrar. Tente novamente mais tarde.';
+  setIsLoading(false);
+
+  Alert.alert('Entrar', title);
   }
+ 
+}
   return (
     <Background source={bgImage} resizeMode="cover"> 
     <Overlay>
@@ -37,32 +58,10 @@ export function SignIn() {
         <Title>Familia Solyom Ansay</Title>
         <Subtitle>Faça seu login</Subtitle>
         <Espaco />
-        <Controller 
-        control={control}
-        name="username"
-        rules={{
-          required:'Insira o seu primeiro nome'
-        }}
-        render={({field:{onChange,value}})=>(
-        <Input
-         placeholder="Nome de usuário" 
-         onChangeText={onChange}
-         value={value}
-         />
-        )}
-        />
-      {errors.username?.message && (<Subtitle>{errors.username.message}</Subtitle>)}
        
         <Controller 
         control={control}
         name="email" 
-        rules={{
-          required:'Insira o seu e-mail',
-          pattern:{
-            value:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-            message:'E-mail inválido'
-          }     
-        }}
         render={({field:{onChange,value}})=>(
         <Input
          placeholder="Email" 
